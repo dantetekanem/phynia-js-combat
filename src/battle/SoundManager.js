@@ -2,13 +2,13 @@ import { Howl, Howler } from 'howler';
 
 export default class SoundManager {
   SOUND_MAP = {
-    'cancel': '/images/Cancel2.ogg',
-    'open': '/images/Cursor2.ogg',
-    'swing': '/images/air-swing.wav',
-    'cursor': '/images/menu_click.wav',
-    'move': '/images/move.ogg',
-    'attack_1': '/images/hit.wav',
-    'heal': '/images/saber.wav',
+    'cancel': '/sounds/Cancel2.ogg',
+    'open': '/sounds/Cursor2.ogg',
+    'swing': '/sounds/air-swing.wav',
+    'cursor': '/sounds/menu_click.wav',
+    'move': '/sounds/move.ogg',
+    'attack_1': '/sounds/hit.wav',
+    'heal': '/sounds/saber.wav',
   };
   VOLUME = 0.5;
 
