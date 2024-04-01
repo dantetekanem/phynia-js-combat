@@ -11,3 +11,5 @@ npm run dev
 
 ### Credits
 This project was created by Leonardo Pereira <contato@leonardopereira.com>
+
+![](public/screenshot.png)
