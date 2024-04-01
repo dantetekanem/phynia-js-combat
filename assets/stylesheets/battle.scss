@@ -1,0 +1,954 @@
+body {
+  background: url('./images/Backgrounds/Forest.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  font-family: 'Helvetica Neue Light';
+  margin: 0;
+}
+
+.left-sidebar {
+  position: absolute;
+  left: 0;
+  width: 310px;
+  height: 100%;
+  z-index: 3;
+
+  .map {
+    left: 0;
+    bottom: 0;
+    position: absolute;
+    padding: 20px 25px;
+    width: 250px;
+    font-size: 12px;
+    color: #fff;
+    background-color:rgba(0, 0, 0, 0.8);
+  }
+
+  .button-icon-active {
+    padding: 5px 8px;
+    display: inline-block;
+    background: rgba(0, 0, 0, 0.8);
+  }
+
+  .button-icon-deactive {
+    padding: 5px 8px;
+    display: inline-block;
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .button {
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    padding: 12px 26px;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.5s;
+    font-size: 14px;
+    &:hover {
+      color: #fff;
+    }
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -50px;
+      width: 0;
+      height: 100%;
+      background-color: #fff;
+      transform: skewX(35deg);
+      z-index: -1;
+      transition: width 0.5s;
+    }
+
+    &:hover::before {
+      width: 180%;
+    }
+  }
+
+  .settings-button {
+    height: 31px;
+  }
+
+  .flee-button {
+    margin-top: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 117px;
+    height: 42px;
+  }
+
+  .whos-turn {
+    background-image: url('./images/Battle/TurnMap.png');
+    width: 285px;
+    height: 46px;
+    font-size: 28px;
+    padding-top: 14px;
+    padding-left: 24px;
+    color: #fff;
+    margin-top: 20px;
+  }
+}
+
+.right-sidebar {
+  position: absolute;
+  right: 0;
+  width: 310px;
+  height: 100%;
+
+  .notification {
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 18px 22px;
+    width: 274px;
+    margin-bottom: 15px;
+  }
+
+  .version {
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    padding: 10px 15px;
+    width: 100px;
+    text-align: right;
+    font-size: 10px;
+    color: #fff;
+    cursor: default;
+  }
+}
+
+.battle-container {
+  position: absolute;
+  left: 50%;
+  margin-left: -625px;
+  width: 1250px;
+  height: 100%;
+
+  .middle {
+    float: left;
+    width: 1250px;
+    height: 100%;
+
+    .timer {
+      height: 210px;
+      text-align: center;
+      vertical-align: middle;
+      line-height: 210px;
+
+      .text {
+        font-size: 55px;
+        color: #fff;
+      }
+    }
+
+    .left-menu {
+      width: 312px;
+      margin-left: -92px;
+      position: absolute;
+      left: 0;
+      height: 624px;
+
+      .active {
+        margin-right: 20px;
+
+        .right-side {
+          box-shadow: -8px 12px 11px -7px #0ff;
+        }
+      }
+
+      .character-box {
+        background: url('./images/Battle/MenuUser.png') no-repeat top right;
+        width: 273px;
+        height: 100px;
+        margin-bottom: 15px;
+        // transform: perspective(273px) rotateY(5deg);
+        transition: all 0.5s;
+        float: right;
+
+        .statuses {
+          width: 48px;
+          height: 90px;
+          margin-top: 4px;
+          float: left;
+          text-align: right;
+
+          div {
+            width: 23px;
+            height: 23px;
+            background-repeat: no-repeat;
+            background-position: center center;
+            float: right;
+            margin-bottom: 1px;
+            margin-left: 1px;
+          }
+        }
+        
+        .right-side {
+          width: 225px;
+          height: 100%;
+          float: left;
+          position: relative;
+
+          .name {
+            font-size: 15px;
+            color: #fff;
+            padding: 8px 12px;
+            float: left;
+            clear: both;
+          }
+
+          .ap {
+            font-size: 17px;
+            color: #fff;
+            position: absolute;
+            width: 50px;
+            top: 42px;
+            left: 8px;
+            text-align: center;
+
+            span {
+              font-size: 10px;
+            }
+          }
+
+          .attrs {
+            width: 160px;
+            text-align: right;
+            float: left;
+            clear: both;
+            font-size: 14px;
+            color: #fff;
+            margin-top: 2px;
+            margin-bottom: 1px;
+            margin-left: 76px;
+
+            .red {
+              color: rgb(255, 81, 81);
+            }
+            .current {
+              width: 36px;
+              float: left;
+            }
+            .line {
+              width: 8px;
+              float: left;
+            }
+            .total {
+              width: 36px;
+              float: left;
+              color: #6d6d6d;
+            }
+          }
+          .gauge {
+            width: 200px;
+            text-align: left;
+            float: left;
+            clear: both;
+            font-size: 10px;
+            color: #fff;
+            margin-top: -2px;
+            margin-left: 14px;
+
+            .bar-base {
+              width: 174px;
+              height: 1px;
+              margin-top: 3px;
+              float: left;
+
+              .current-bar {
+                background-color: #ba4218;
+                height: 1px;
+              }
+              .bar-is-full {
+                background-color: #e07905 !important;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .right-menu {
+      width: 312px;
+      margin-right: -92px;
+      position: absolute;
+      right: 0;
+      height: 624px;
+
+      .active {
+        margin-left: 20px;
+      
+        .left-side {
+          box-shadow: 8px 12px 11px -7px #0ff;
+        }
+      }
+      
+      .character-box {
+        background: url('./images/Battle/MenuEnemy.png') no-repeat top left;
+        width: 273px;
+        height: 100px;
+        margin-bottom: 15px;
+        // transform: perspective(273px) rotateY(-5deg);
+        transition: all 0.5s;
+        float: left;
+      
+        .statuses {
+          width: 48px;
+          height: 90px;
+          margin-top: 4px;
+          float: left;
+          text-align: left;
+      
+          img {
+            float: left;
+            margin-bottom: 1px;
+            margin-left: 1px;
+          }
+        }
+      
+        .left-side {
+          width: 225px;
+          height: 100%;
+          float: left;
+      
+          .name {
+            font-size: 15px;
+            color: #fff;
+            padding: 8px 16px;
+            float: right;
+            clear: both;
+          }
+
+          .hp {
+            .bar-base {
+              .current-bar {
+                background-color: #1686af;
+              }
+            }
+          }
+
+          .mp {
+            .bar-base {
+              .current-bar {
+                background-color: #3eb517;
+              }
+            }
+          }
+
+          .gauge {
+            .bar-base {
+              width: 173px !important;
+              .current-bar {background-color: #ba4218;
+              }
+            }
+          }
+      
+          .bar {
+            width: 200px;
+            text-align: right;
+            float: right;
+            clear: both;
+            font-size: 10px;
+            color: #fff;
+            margin-top: 0px;
+            margin-right: 14px;
+            margin-bottom: 3px;
+      
+            .bar-base {
+              width: 143px;
+              height: 1px;
+              margin-top: 3px;
+              float: right;
+      
+              .current-bar {
+                height: 1px;
+              }
+      
+              .bar-is-full {
+                background-color: #e07905 !important;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .board {
+      position: absolute;
+      left: 50%;
+      margin-left: -375px;
+      z-index: 5;
+      width: 750px;
+      height: 642px;
+      background: url('./images/Battle/Board.png');
+
+      canvas {
+        width: 1000px;
+        height: 1000px;
+        left: -110px;
+        top: -120px;
+        position: absolute;
+        z-index: 4;
+      }
+
+      #animations {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: 20;
+        display: none;
+
+        div {
+          position: absolute;
+        }
+      }
+
+      .hover-set {
+        width: 114px;
+        height: 113px;
+        position: absolute;
+        opacity: 0;
+        z-index: 3;
+        .item {
+          animation: rotation 5s infinite linear;
+          width: 100%;
+          height: 100%;
+        }
+
+        .move {
+          background: url('./images/Battle/Hover_Move.png');
+        }
+
+        .block {
+          background: url('./images/Battle/Hover_Block.png');
+        }
+
+        .select {
+          background: url('./images/Battle/Hover_Select.png');
+        }
+      }
+
+      .spot {
+        width: 100px;
+        height: 100px;
+        position: absolute;
+
+        .hover {
+          position: absolute;
+          width: 55px;
+          height: 55px;
+          left: 22px;
+          top: 22px;
+          z-index: 5;
+        }
+        .enable-hover-debug {
+          color: white;
+          text-align: center;
+          font-size: 12px;
+          text-shadow: #000000 2px 2px;
+        }
+      }
+
+      .spot-marked {
+        background: url('./images/Battle/MarkedSpot.png');
+        cursor: pointer;
+      }
+
+      .spot-active {
+        background: url('./images/Battle/SelectedPiece.png');
+        cursor: pointer;
+      }
+
+      .spot-available {
+        background: url('./images/Battle/MaskFreeSpot.png');
+        background-position: 0px 5px;
+        -webkit-animation: flash linear 1s infinite;
+        animation: flash linear 1s infinite;
+        z-index: 4;
+      }
+
+      #pieces-table {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+
+        img {
+          object-fit: cover;
+          border-radius: 50%;
+          height: 60px;
+          width: 60px;
+          top: 20px;
+          left: 20px;
+          position: absolute;
+          z-index: 0;
+        }
+      }
+
+      .menu-action {
+        width: 137px;
+        height: 202px;
+        position: absolute;
+        z-index: 7;
+        opacity: 0;
+        background: url('./images/Battle/ActionMenuLarge.png') bottom center no-repeat;
+
+        .title {
+          background: url('./images/Battle/TitleActions.png') top center no-repeat;
+          display: inline-block;
+          width: 100%;
+          height: 14px;
+        }
+
+        ul {
+          list-style-type: none;
+          padding: 0px;
+          text-transform: uppercase;
+          font-size: 11px;
+          color: #fff;
+
+          li {
+            margin-left: 5px;
+            padding: 3px 9px;
+            width: 108px;
+            margin-bottom: 2px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: color 0.5s;
+
+            img {
+              float: left;
+              margin-top: 2px;
+              margin-left: -2px;
+            }
+
+            // &:hover {
+            //   background-color: rgba(0, 132, 255, 0.5);
+            // }
+            
+            &::before {
+              content: '';
+              position: absolute;
+              top: 0;
+              left: -50px;
+              width: 0;
+              height: 100%;
+              background-color: rgba(0, 132, 255, 0.5);
+              transform: skewX(35deg);
+              z-index: -1;
+              transition: width 0.5s;
+            }
+            
+            &:hover::before {
+              width: 180%;
+            }
+          }
+
+          .inactive {
+            cursor: default;
+            opacity: 0.5;
+            &:hover {
+              background-color: none !important;
+            }
+          }
+        }
+      }
+
+      .menu-damage {
+        width: 123px;
+        height: 123px;
+        position: absolute;
+        z-index: 7;
+        display: none;
+        opacity: 0;
+        background: url('./images/Battle/DamageMenu.png') top center no-repeat;
+      
+        ul {
+          list-style-type: none;
+          padding: 0px;
+          margin-top: 24px;
+          text-transform: uppercase;
+          font-size: 11px;
+          color: #fff;
+      
+          li {
+            margin-left: 5px;
+            padding: 3px 9px 3px 4px;
+            width: 100px;
+            margin-bottom: 2px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: color 0.5s;
+            font-size: 12px;
+            text-align: center;
+      
+            img {
+              float: left;
+              margin-top: 2px;
+              margin-left: -2px;
+            }
+      
+            &::before {
+              content: '';
+              position: absolute;
+              top: 0;
+              left: -50px;
+              width: 0;
+              height: 100%;
+              background-color: rgba(0, 132, 255, 0.5);
+              transform: skewX(35deg);
+              z-index: -1;
+              transition: width 0.5s;
+            }
+      
+            &:hover::before {
+              width: 180%;
+            }
+          }
+
+          .risk {
+            color: #ffb200;
+          }
+      
+          .inactive {
+            cursor: default;
+            opacity: 0.5;
+      
+            &:hover {
+              background-color: none !important;
+            }
+          }
+        }
+      }
+      
+      .title-magic {
+        background: url('./images/Battle/TitleMagic.png') top center no-repeat;
+        display: inline-block;
+        width: 100%;
+        height: 14px;
+      }
+
+      .title-skills {
+        background: url('./images/Battle/TitleSpecialSkills.png') top center no-repeat;
+        display: inline-block;
+        width: 100%;
+        height: 14px;
+      }
+
+      .title-items {
+        background: url('./images/Battle/TitleItems.png') top center no-repeat;
+        display: inline-block;
+        width: 100%;
+        height: 14px;
+      }
+
+      .menu-big {
+        width: 310px;
+        height: 185px;
+        position: absolute;
+        display: none;
+        opacity: 0;
+        left: 542px;
+        top: 508px;
+        z-index: 7;
+        background: url('./images/Battle/BiggerMenu.png') bottom left no-repeat;
+
+        .pagination {
+          float: left;
+          width: 30px;
+          height: 45px;
+          padding-top: 43px;
+
+          a {
+            text-decoration: none;
+            cursor: pointer;
+          }
+
+          .next {
+            background: url('./images/Battle/NextPage.png') center center no-repeat;
+            width: 30px;
+            height: 21px;
+            display: inline-block;
+            margin-bottom: 3px;
+          }
+
+          .prev {
+            background: url('./images/Battle/PrevPage.png') center center no-repeat;
+            width: 30px;
+            height: 21px;
+            display: inline-block;
+          }
+
+          .inactive {
+            cursor: default;
+            opacity: 0.5;
+          }
+        }
+
+        .description {
+          float: left;
+          clear: both;
+          background: rgba(0, 25, 70, 0.75);
+          font-size: 13px;
+          color: #fff;
+          padding: 11px 15px;
+          width: 236px;
+          height: 80px;
+          margin: 5px 0px 0px 15px;
+
+          b {
+            color: #ffb200;
+            font-size: 13px;
+          }
+        }
+      
+        .menu-cut {
+          width: 257px;
+          height: 153px;
+          margin-left: 19px;
+          margin-top: 4px;
+          overflow: hidden;
+          float: left;
+
+          ul {
+            list-style-type: none;
+            padding: 0px;
+            text-transform: uppercase;
+            font-size: 11px;
+            color: #fff;
+            position: relative;
+            margin-top: 3px;
+            width: 380px; // items columns by 3 (126x3)
+        
+            li {
+              float: left;
+              height: 142px;
+              width: 120px;
+              margin-right: 5px;
+              a {
+                width: 115px;
+                padding: 3px 4px 3px 4px;
+                margin: 0px -3px 2px 5px;
+                line-height: 17px;
+                font-size: 10px;
+                cursor: pointer;
+                color: #fff;
+                text-decoration: none;
+                display: inline;
+                position: relative;
+                overflow: hidden;
+                transition: color 0.5s;
+                float: left;
+
+                .small {
+                  font-size: 8px;
+                  color: #bbd9fe;
+                  float: right;
+                }
+          
+                img {
+                  float: left;
+                  margin-top: 2px;
+                  margin-left: -2px;
+                }
+          
+                &::before {
+                  content: '';
+                  position: absolute;
+                  top: 0;
+                  left: -50px;
+                  width: 0;
+                  height: 100%;
+                  background-color: rgba(0, 132, 255, 0.5);
+                  transform: skewX(35deg);
+                  z-index: -1;
+                  transition: width 0.5s;
+                }
+          
+                &:hover::before {
+                  width: 180%;
+                }
+              }
+            }
+        
+            .inactive {
+              cursor: default;
+              opacity: 0.5;
+        
+              &:hover {
+                background-color: none !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.damage {
+  position: absolute;
+  width: 150px;
+  height: 50px;
+  z-index: 20;
+  
+  .option {
+    font-size: 28px;
+    text-shadow: 0 0 5px #032F37,
+    0 0 5px #032F37,
+    0 0 6px #032F37,
+    0 0 7px #032F37,
+    0 0 8px #032f2f,
+    0 0 9px #032f2f,
+    0 0 10px #032f2f,
+    0 0 15px #032f2f;
+    color: #fff;
+    float: left;
+    margin-right: 1px;
+    position: relative;
+  }
+
+  .hit {
+    font-size: 24px;
+    text-shadow: 0 0 5px #032F37,
+      0 0 5px #032F37,
+      0 0 6px #032F37,
+      0 0 7px #032F37,
+      0 0 8px #032f2f,
+      0 0 9px #032f2f,
+      0 0 10px #032f2f,
+      0 0 15px #032f2f;
+    color: rgb(255, 72, 0);
+    float: left;
+    margin-right: 1px;
+    position: absolute;
+    left: 10px;
+    top: 5px;
+  }
+
+  .critical {
+    font-size: 24px;
+    text-shadow: 0 0 5px #032F37,
+      0 0 5px #032F37,
+      0 0 6px #032F37,
+      0 0 7px #032F37,
+      0 0 8px #032f2f,
+      0 0 9px #032f2f,
+      0 0 10px #032f2f,
+      0 0 15px #032f2f;
+    color: rgb(255, 153, 0);
+    float: left;
+    margin-right: 1px;
+    position: absolute;
+    left: 10px;
+    top: 35px;
+  }
+
+  .effect {
+    font-size: 24px;
+    text-shadow: 0 0 5px #032F37,
+      0 0 5px #032F37,
+      0 0 6px #032F37,
+      0 0 7px #032F37,
+      0 0 8px #032f2f,
+      0 0 9px #032f2f,
+      0 0 10px #032f2f,
+      0 0 15px #032f2f;
+    color: rgb(0, 255, 81);
+    float: left;
+    margin-right: 1px;
+    position: absolute;
+    left: 10px;
+    top: 0px;
+  }
+
+  .heal {
+    color: #3eb517 !important;
+  }
+}
+
+#turn-base {
+  z-index: 50;
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+
+  .middle-zone {
+    position: absolute;
+    width: 100%;
+    height: 104px;
+    top: 50%;
+    margin-top: -80px;
+    background-color: rgba(8, 29, 58, 0.65);
+    overflow: hidden;
+
+    .body {
+      position: absolute;
+      width: 862px;
+      height: 100%;
+      left: 50%;
+      margin-left: -431px;
+      background-color: rgba(8, 29, 58, 0.85);
+
+      .text {
+        width: 100%;
+        height: 100%;
+        background: url('./images/Battle/NotifyLines.png') no-repeat;
+        background-position-y: 10px;
+        background-position-x: center;
+        text-align: center;
+        font-size: 44px;
+        color: #fcf4b3;
+        line-height: 96px;
+        cursor: default;
+      }
+    }
+  }
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+@-webkit-keyframes flash {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: .5;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes flash {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: .5;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

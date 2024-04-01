@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Phynia Combat System</title>
+  </head>
+  <body>
+    <div class="left-sidebar">
+      <div class="settings-button">
+        <a href="#" class="button-icon-active"><img src="images/Battle/Icons/Music.png" alt=""></a>
+        <a href="#" class="button-icon-deactive"><img src="images/Battle/Icons/Sound.png" alt=""></a>
+      </div>
+      <div class="whos-turn" id="whos-turn">Your Turn</div>
+      <div class="flee-button">
+        <a href="#" class="button">Flee Battle</a>
+      </div>
+      <div class="map">Starter Map - Testing Battle</div>
+    </div>
+    <div class="battle-container">
+      <div class="middle">
+        <div class="timer">
+          <span class="text" id="timer-text">00:00</span>
+        </div>
+        <div class="left-menu">
+        </div>
+
+        <div class="board" id="board">
+          <canvas id="canvas" width="1000" height="1000"></canvas>
+          <div class="hover-set" id="mouse-hover">
+            <div class="item move"></div>
+          </div>
+          <div id="spots"></div>
+          <div id="pieces-table"></div>
+
+          <div class="menu-action" id="menu-action">
+            <div class="title"></div>
+            <ul>
+            </ul>
+          </div>
+
+          <div class="menu-damage" id="menu-damage">
+            <ul>
+            </ul>
+          </div>
+
+          <div class="menu-big" id="menu-magic">
+            <div class="title-magic"></div>
+            <div class="menu-cut">
+              <ul>
+                <li></li>
+              </ul>
+            </div>
+            <div class="pagination">
+              <a href="#" class="next"></a>
+              <a href="#" class="prev"></a>
+            </div>
+            <div class="description">
+            </div>
+          </div>
+
+          <div class="menu-big" id="menu-skills">
+            <div class="title-skills"></div>
+            <div class="menu-cut">
+              <ul>
+                <li></li>
+              </ul>
+            </div>
+            <div class="pagination">
+              <a href="#" class="next"></a>
+              <a href="#" class="prev inactive"></a>
+            </div>
+            <div class="description">
+            </div>
+          </div>
+
+          <div class="menu-big" id="menu-items">
+            <div class="title-items"></div>
+            <div class="menu-cut">
+              <ul>
+                <li></li>
+              </ul>
+            </div>
+            <div class="pagination">
+              <a href="#" class="next"></a>
+              <a href="#" class="prev inactive"></a>
+            </div>
+            <div class="description">
+            </div>
+          </div>
+
+          <div id="animations"></div>
+        </div>
+
+        <div class="right-menu">
+        </div>
+      </div>
+    </div>
+    <div class="right-sidebar">
+      <div class="version">Version 0.0.1 alpha</div>
+    </div>
+
+    <div id="turn-base">
+      <div class="middle-zone">
+        <div class="body">
+          <div class="text">Enemy's Turn</div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
