@@ -8,6 +8,7 @@ copy this project and install the dependencies, and execute:
 npm i
 npm run dev
 ```
+you can also access a live version at https://leonardopereira.com/phynia_combat_example/
 
 ### Credits
 This project was created by Leonardo Pereira <contato@leonardopereira.com> around mid~2022, the code contains bugs and are missing tests. This was a POC I did a long time ago.
