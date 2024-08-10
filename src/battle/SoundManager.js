@@ -9,6 +9,7 @@ export default class SoundManager {
     'move': '/sounds/move.ogg',
     'attack_1': '/sounds/hit.wav',
     'heal': '/sounds/saber.wav',
+    'victory': '/sounds/victory.wav',
   };
   VOLUME = 0.5;
 

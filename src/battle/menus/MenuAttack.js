@@ -112,13 +112,13 @@ export default class MenuAttack {
 
     if (!this.combat.damage(hit, this.board, this.character, this.target, this.hits)) {
       this.hitBox.build();
-      return;
     }
     
     this.hits += 1;
     if (this.target.isDead) {
       this.board.kill(this.target.id);
       this.allOff();
+      this.board.checkIfYouWin();
     } else {
       this.hitBox.build();
     }

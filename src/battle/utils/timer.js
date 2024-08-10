@@ -2,13 +2,18 @@ export default class Timer {
   constructor(ref, time = 0) {
     this.ref = ref;
     this.time = time;
+    this.interval = null;
   }
 
   start() {
-    setInterval(() => {
+    this.interval = setInterval(() => {
       this.time += 1;
       this.render();
     }, 1000);
+  }
+
+  stop() {
+    clearInterval(this.interval);
   }
 
   render() {

@@ -41,5 +41,7 @@ export default class CombatControl {
     target.checkStatus();
     from.checkStatus();
     board.animator.play('simple attack', targetSpot);
+
+    return true;
   }
 };

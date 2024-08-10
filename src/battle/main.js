@@ -24,6 +24,7 @@ class Main {
 
   async init() {
     this.timer.start();
+    this.board.timer = this.timer;
     this.board.setup();
     this.characters = this.loadCharacters();
     this.setCharactersToBoard();

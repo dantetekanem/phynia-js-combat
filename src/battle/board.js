@@ -14,13 +14,13 @@ import Hex from './Hex';
 import * as utils from './utils';
 
 export default class Board {
-  LETTS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  LETTS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
   ENABLE_DEBUG = false;
 
   constructor(ref, hover, canvas, soundManager, animator) {
     this.ref = ref;
     this.canvas = canvas;
-    this.window = new Window(document.getElementById('turn-base'));
+    this.window = new Window(document.getElementById("turn-base"));
     this.hover = new Hover(hover, this);
     this.grid = BoardStructure.spots;
     this.menu = new Menu(this);
@@ -36,6 +36,7 @@ export default class Board {
     this.animator = new AnimationControl(animator, this);
     this.turn = new TurnCycle(this);
     this.pathfinding = new Pathfinding(this);
+    this.timer = null;
   }
 
   setup() {
@@ -45,32 +46,39 @@ export default class Board {
         const column = row[j];
         column.id = `${this.LETTS[i]}${j + 1}`;
         column.rowPosition = { x: i, y: j };
-        column.hex = new Hex(j - 5, i - 5, row.length === 10 ? 'short' : 'long');
+        column.hex = new Hex(
+          j - 5,
+          i - 5,
+          row.length === 10 ? "short" : "long"
+        );
         column.pos = { y: i, x: j };
         if (column.empty) {
           continue;
         }
 
         // spot
-        let el = document.createElement('div');
-        el.classList.add('spot');
+        let el = document.createElement("div");
+        el.classList.add("spot");
         el.dataset.id = column.id;
-        el.dataset.available = 'true';
+        el.dataset.available = "true";
         el.id = `spot_${column.id}`;
         el.style.left = `${column.x}px`;
         el.style.top = `${column.y}px`;
 
         // hover
-        let hover = document.createElement('div');
-        hover.classList.add('hover');
+        let hover = document.createElement("div");
+        hover.classList.add("hover");
         if (this.ENABLE_DEBUG) {
-          hover.innerHTML = column.id + '<br>' + `${column.hex.q}, ${column.hex.r}, ${column.hex.s}`;
-          hover.classList.add('enable-hover-debug');
+          hover.innerHTML =
+            column.id +
+            "<br>" +
+            `${column.hex.q}, ${column.hex.r}, ${column.hex.s}`;
+          hover.classList.add("enable-hover-debug");
         }
 
         hover.onclick = () => {
           this.onClick(column);
-        }
+        };
         hover.onmouseover = () => {
           this.onMove(column);
         };
@@ -87,11 +95,18 @@ export default class Board {
   }
 
   pathTo(from, to) {
-    const destinyOptions = this.getAvailablePositions(to).map(p => this.findSpotById(p));
+    const destinyOptions = this.getAvailablePositions(to).map((p) =>
+      this.findSpotById(p)
+    );
     const possiblePaths = [];
 
     for (const option of destinyOptions) {
-      const path = this.pathfinding.search(this.grid, this.markedPositions(), from, option);
+      const path = this.pathfinding.search(
+        this.grid,
+        this.markedPositions(),
+        from,
+        option
+      );
       if (path.length > 0) {
         possiblePaths.push(path);
       }
@@ -101,22 +116,25 @@ export default class Board {
   }
 
   pathToClosest(from, range) {
-    const paths = range.map(p => this.pathTo(from, p));
+    const paths = range.map((p) => this.pathTo(from, p));
 
     return this.closestInRange(paths);
   }
 
   closestInRange(range) {
     let lowest = range.sort((a, b) => a.length - b.length)[0];
-    let lowestRange = range.filter(p => p.length === lowest.length);
+    let lowestRange = range.filter((p) => p.length === lowest.length);
     return utils.getRandomInRange(lowestRange);
   }
 
   clearAvailableSpots() {
-    for (const spot of document.getElementsByClassName('spot')) {
-      spot.classList.remove('spot-available');
-      if (!spot.classList.contains('spot-marked') || !spot.classList.contains('spot-active')) {
-        spot.dataset.available = 'true';
+    for (const spot of document.getElementsByClassName("spot")) {
+      spot.classList.remove("spot-available");
+      if (
+        !spot.classList.contains("spot-marked") ||
+        !spot.classList.contains("spot-active")
+      ) {
+        spot.dataset.available = "true";
       }
     }
     this.hover._clearCanvas();
@@ -124,13 +142,14 @@ export default class Board {
 
   clearSpot(position) {
     const spot = document.getElementById(`spot_${position}`);
-    spot.classList.remove('spot-available', 'spot-marked');
-    spot.dataset.available = 'true';
+    spot.classList.remove("spot-available", "spot-marked");
+    spot.dataset.available = "true";
     this.hover._clearCanvas();
   }
 
   setAvailableSpots(position, distance) {
-    let [availableSpots, positionsWithDistance, markedPositions] = this.getAvailableSpotsInRange(position, distance);
+    let [availableSpots, positionsWithDistance, markedPositions] =
+      this.getAvailableSpotsInRange(position, distance);
 
     availableSpots.forEach((pos) => {
       if (!markedPositions.includes(pos)) {
@@ -152,8 +171,10 @@ export default class Board {
 
       positions.forEach((pos) => {
         if (!walkedPositions.includes(pos)) {
-          newPositions = newPositions.concat(this.getAvailablePositions(this.findSpotById(pos)));
-          newPositions.forEach(p => {
+          newPositions = newPositions.concat(
+            this.getAvailablePositions(this.findSpotById(pos))
+          );
+          newPositions.forEach((p) => {
             if (!positionsWithDistance[p]) {
               positionsWithDistance[p] = i + 1;
             }
@@ -171,28 +192,28 @@ export default class Board {
   }
 
   markedPositions() {
-    const charactersPositions = this.characters.map(c => c.position);
-    const enemiesPositions = this.enemies.map(e => e.position);
+    const charactersPositions = this.characters.map((c) => c.position);
+    const enemiesPositions = this.enemies.map((e) => e.position);
 
     return [...charactersPositions, ...enemiesPositions];
   }
 
   getAvailablePositions(spot) {
-    return spot.hex.neighbors(this.grid).map(s => s.id);
+    return spot.hex.neighbors(this.grid).map((s) => s.id);
   }
 
   setSpotAsAvailable(spot) {
     const el = document.getElementById(`spot_${spot.id}`);
-    if (el.dataset.available === 'true') {
-      el.classList.add('spot-available');
-      el.dataset.available = 'false';
+    if (el.dataset.available === "true") {
+      el.classList.add("spot-available");
+      el.dataset.available = "false";
     }
   }
 
   onClick(spot) {
-    if (this.turn.currentTurn !== 'characters') return;
+    if (this.turn.currentTurn !== "characters") return;
 
-    if (this.isMoving && this.menu.currentMenu.endsWith('select')) {
+    if (this.isMoving && this.menu.currentMenu.endsWith("select")) {
       return this.hover.click(spot);
     }
 
@@ -200,7 +221,7 @@ export default class Board {
       return this.triggerCharacterAction(spot);
     }
 
-    if(this.isMoving && this.menu.character.position === spot.id) {
+    if (this.isMoving && this.menu.character.position === spot.id) {
       return this.menu.back();
     }
 
@@ -210,7 +231,11 @@ export default class Board {
   }
 
   onMove(spot) {
-    if (this.menu.currentMenu === 'moving' && spot.id === this.menu?.character?.position) return;
+    if (
+      this.menu.currentMenu === "moving" &&
+      spot.id === this.menu?.character?.position
+    )
+      return;
     if (!this.canUseHover) return;
     this.hover.move(spot);
   }
@@ -220,7 +245,7 @@ export default class Board {
       const row = this.grid[i];
       for (let j = 0; j < row.length; j++) {
         const column = row[j];
-        
+
         if (column.id === id) return column;
       }
     }
@@ -236,32 +261,32 @@ export default class Board {
       const character = this.getCharacter(from) || this.getEnemy(from);
       this.setBoardEffects(character, to);
       const img = document.getElementById(`img_spot_${character.id}`);
-      spotEl.classList.remove('spot-marked');
-      spotEl.dataset.available = 'true';
-      newSpot.classList.add('spot-marked');
-      newSpot.dataset.available = 'false';
-      this.soundManager.play('move');
+      spotEl.classList.remove("spot-marked");
+      spotEl.dataset.available = "true";
+      newSpot.classList.add("spot-marked");
+      newSpot.dataset.available = "false";
+      this.soundManager.play("move");
       anime({
         targets: img,
         left: `${spotTo.x + 20}px`,
         top: `${spotTo.y + 20}px`,
-        easing: 'easeOutQuint',
+        easing: "easeOutQuint",
         duration: 600,
         complete: () => {
           character.position = to;
           resolve();
-        }
-      })
-    })
+        },
+      });
+    });
   }
 
   setBoardEffects(character, spot) {
     // remove any previous board effect
-    character.effects = character.effects.filter(e => e?.source !== 'board');
+    character.effects = character.effects.filter((e) => e?.source !== "board");
     // add board effect if any
     let effect;
-    if (effect = this.boardStructure.zoneEffects[spot]) {
-      effect.source = 'board';
+    if ((effect = this.boardStructure.zoneEffects[spot])) {
+      effect.source = "board";
       character.effects.push(effect);
     }
     // show effects
@@ -272,21 +297,30 @@ export default class Board {
     let targetGroup, target;
     target = this.getCharacterById(id);
     if (target) {
-      targetGroup = 'characters';
+      targetGroup = "characters";
     } else {
       target = this.getEnemyById(id);
-      targetGroup = 'enemies';
+      targetGroup = "enemies";
     }
     if (!target.isDead) return;
 
     this.clearSpot(target.position);
     const piece = this.findPieceById(id);
     piece.remove();
-    this[targetGroup] = this[targetGroup].filter(t => t.id !== id);
+    this[targetGroup] = this[targetGroup].filter((t) => t.id !== id);
     console.log(this[targetGroup]);
     console.log(`${target.name} was killed`);
     target.checkStatus();
     target.dash.remove();
+  }
+
+  checkIfYouWin() {
+    if (this.enemies.length > 0) return;
+    this.timer.stop();
+    this.soundManager.play("victory");
+    this.window.showNotification("Victory!", null, {
+      speedFactor: 0.6,
+    }, false);
   }
 
   setCharacter(character) {
@@ -294,8 +328,8 @@ export default class Board {
     // Build Character spot
     const spotEl = document.getElementById(`spot_${character.position}`);
     this.addPiece(character);
-    spotEl.classList.add('spot-marked');
-    spotEl.dataset.available = 'false';
+    spotEl.classList.add("spot-marked");
+    spotEl.dataset.available = "false";
 
     // Build Character dashboard
     character.dash = new CharacterDash(character);
@@ -306,9 +340,9 @@ export default class Board {
   }
 
   addPiece(character) {
-    const table = document.getElementById('pieces-table');
+    const table = document.getElementById("pieces-table");
     const spot = this.findSpotById(character.position);
-    const img = document.createElement('img');
+    const img = document.createElement("img");
     img.src = character.avatar;
     img.id = `img_spot_${character.id}`;
     img.style.left = `${spot.x + 20}px`;
@@ -337,20 +371,20 @@ export default class Board {
   }
 
   triggerCharacterAction(spot) {
-    if (this.menu.currentMenu === 'hit') {
+    if (this.menu.currentMenu === "hit") {
       return this.menu.back();
     }
 
     const character = this.getCharacter(spot.id);
     if (character.ap === 0) {
-      this.soundManager.play('cancel');
+      this.soundManager.play("cancel");
       return;
     }
     this.menu.build(character);
     if (this.menu.isOn) {
       this.menu.back();
     } else {
-      this.menu.on('actions', spot);
+      this.menu.on("actions", spot);
     }
   }
 
@@ -358,8 +392,8 @@ export default class Board {
     enemy.position = this.randomizer.getSideA(this.markedPositions());
     const spotEl = document.getElementById(`spot_${enemy.position}`);
     this.addPiece(enemy);
-    spotEl.classList.add('spot-marked');
-    spotEl.dataset.available = 'false';
+    spotEl.classList.add("spot-marked");
+    spotEl.dataset.available = "false";
     // Build Enemy dashboard
     enemy.dash = new EnemyDash(enemy);
     enemy.dash.build();
@@ -386,8 +420,8 @@ export default class Board {
 
   shake(duration = 0.5, xMax = 15) {
     anime({
-      targets: document.getElementById('board'),
-      easing: 'easeInOutSine',
+      targets: document.getElementById("board"),
+      easing: "easeInOutSine",
       duration: 1000 * duration,
       translateX: [
         {
@@ -403,8 +437,8 @@ export default class Board {
           value: xMax / 2,
         },
         {
-          value: 0
-        }
+          value: 0,
+        },
       ],
     });
   }
