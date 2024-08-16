@@ -1,5 +1,5 @@
 body {
-  background: url('./images/Backgrounds/Forest.jpg') no-repeat center center fixed;
+  background: asset-url('combat/Backgrounds/Forest.jpg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -386,8 +386,9 @@ body {
       background: url('./images/Battle/Board.png');
 
       canvas {
-        width: 1000px;
-        height: 1000px;
+        width: 100%;
+        height: 100%;
+        background-color: transparent !important;
         left: -110px;
         top: -120px;
         position: absolute;
